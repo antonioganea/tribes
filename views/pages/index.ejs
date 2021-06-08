@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <%- include('../partials/navbar', {username: username}); %>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+             border-collapse: collapse;
+            text-align: center;
+            background-color: #f1f1c1;
+        }
+        </style>
+
+    <table>
+        <tr>
+          <th>Village</th>
+          <th>User</th>
+          <th>Gold</th>
+          <th>Attack</th>
+        </tr>
+        <tr>
+          <td>Tecuci</td>
+          <td>-----------</td>
+          <td>1,000💰</td>
+          <td>⚔️ Send troops</td>
+        </tr>
+        <tr>
+            <td>Cetatea X</td>
+            <td>----------------</td>
+            <td>52,000💰</td>
+            <td>⚔️ Send troops</td>
+          </tr>
+        <tr>
+          <td>Barlad</td>
+          <td>--------------</td>
+          <td>1,580💰</td>
+          <td>⚔️ Send troops</td>
+        </tr>
+        <tr>
+          <td>Cetatea Z</td>
+          <td>--------------</td>
+          <td>15,000💰</td>
+          <td>⚔️ Send troops</td>
+        </tr>
+        <tr>
+          <td>Roma</td>
+          <td>------------</td>
+          <td>30,000💰</td>
+          <td>⚔️ Send troops</td>
+        </tr>
+        <tr>
+          <td>Cetatea Rasnov</td>
+          <td>---------------</td>
+          <td>13,000💰</td>
+          <td>⚔️ Send troops</td>
+        </tr>
+    </table>
+
+    <p>a<br>a<br></p>
+
+    <div style="margin: auto;width: 50%;">
+        <table>
+
+            <tr>
+                <td>+</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+             </tr>
+            
+            <% for ( let y = 0; y < 8; y ++ ) { %>
+                
+                <tr>
+                    <td><%= y %></td>
+                    <% for ( let x = 0; x < 8; x ++ ) { 
+                        if ( mapChunk[y][x] ) { %>
+                            
+                            <%if ( mapChunk[y][x].constructor.name == "Village" ) { %>
+                                <td style="width:100px; height:100px; color:red"><%= mapChunk[y][x].name  %></td>
+                            <% } %>
+                            <%if ( mapChunk[y][x].constructor.name == "Forest" ) { %>
+                                <td style="width:100px; height:100px; color:green">Forest</td>
+                            <%}%>
+
+                    <% } else { %> <td style="width:100px; height:100px"></td> <% }
+                } %>
+                </tr>
+                
+        
+            <% } %>
+        </table>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
