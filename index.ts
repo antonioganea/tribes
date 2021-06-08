@@ -100,7 +100,7 @@ app.get('/register', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-  insertUser(req.body.username, req.body.email, req.body.phone, req.body.address, req.body.password, req.body.sex);
+  insertUser(req.body.username, req.body.email, req.body.password);
   res.redirect('/');
 })
 

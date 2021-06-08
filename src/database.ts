@@ -18,19 +18,16 @@ let sqldb = new sqlite3.Database('./database/users.db', sqlite3.OPEN_READWRITE |
     sqldb.run(`CREATE TABLE IF NOT EXISTS "users" (
       "username"	TEXT NOT NULL UNIQUE,
       "email"     TEXT NOT NULL,
-      "phone"     TEXT NOT NULL,
-      "address"   TEXT NOT NULL,
-      "password"	TEXT NOT NULL,
-      "sex" TEXT NOT NULL
+      "password"	TEXT NOT NULL
     );`)
   
     console.log("sqlite db init'd")
   });
 });
 
-export function insertUser(username: string, email: string, phone: string, address: string, password: string, sex: string){
+export function insertUser(username: string, email: string, password: string){
   sqldb.serialize(() => {
-		sqldb.run(`INSERT INTO "main"."users"("username", "email", "phone", "address","password", "sex") VALUES (?,?,?,?,?,?);`, username, email, phone, address, password, sex, function (err : any){
+		sqldb.run(`INSERT INTO "main"."users"("username", "email","password") VALUES (?,?,?);`, username, email, password, function (err : any){
 			if (err) {
 				console.log (err)
 			}
