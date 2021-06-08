@@ -9,4 +9,6 @@ git clone https://github.com/antonioganea/tribes
 cd tribes
 npm install
 npm start
+
+open a browser and enter : localhost
 ```
