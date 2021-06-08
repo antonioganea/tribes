@@ -1,3 +1,4 @@
+import { Building } from "./building";
 import { getResourceDelta, newResourceCollection, ResourceCollection, ResourceType } from "./resources";
 import { Village } from "./village";
 

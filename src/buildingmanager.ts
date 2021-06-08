@@ -11,7 +11,13 @@ export class BuildingManager{
     private farm : Farm;
 
     constructor(){
-        
+        this.cityHall = new CityHall();
+        this.barracks = new Barracks();
+        this.wall = new Wall();
+        this.mine = new Mine();
+        this.lumberjack = new Lumberjack();
+        this.claymine = new ClayMine();
+        this.farm = new Farm();
     }
 
     public getBuilding( buildingName : BuildingType ) : Building {
@@ -33,8 +39,8 @@ export class BuildingManager{
         }
     }
 
-    public getGeneratorByResourceType( reosurceType : ResourceType ) : ResourceGenerator {
-        switch(reosurceType){
+    public getGeneratorByResourceType( resourceType : ResourceType ) : ResourceGenerator {
+        switch(resourceType){
             case ResourceType.Metal:
                 return this.mine;
             case ResourceType.Wood:

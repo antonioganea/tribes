@@ -20,7 +20,7 @@ console.log( d.getName());
 export abstract class Building{
     private static readonly longName: string;
 
-    private level: number;
+    private level: number = 0;
     public getLevel() : number{
         return this.level;
     }

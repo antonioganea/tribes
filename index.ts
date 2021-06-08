@@ -8,6 +8,8 @@ import { newMilitaryCollection, MilitaryCollection, MilitaryUnitData, MilitaryUn
 import { Village } from './src/village';
 import { User } from './src/user';
 import { World } from './src/world';
+import { inspect } from 'util' // or directly
+import { ResourceType } from './src/resources';
 
 let mycollection : MilitaryCollection = newMilitaryCollection();
 
@@ -122,11 +124,42 @@ app.get('/profile/:user/', (req,res) => {
   
     let pageData = {
       profileData: row,
-      models: models
+      userVillages : world.getUserVillages(username)
     };
   
     res.render("pages/profile", pageData)
   })
+})
+
+app.get('/village', (req,res) => {
+  let username : string = (<any>req.user).username;
+
+  let worldCell = world.getCell(parseInt(<any>req.query.x), parseInt(<any>req.query.y))
+
+  /*
+  let resources = {
+    "Wood" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Wood),
+    "Clay" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Clay),
+    "Food" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Food),
+    "Metal" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Metal)
+  }
+  */
+
+  /*
+        Wood : <%= resources.Wood %><br>
+        Clay : <%= resources.Clay %><br>
+        Food : <%= resources.Food %><br>
+        Metal : <%= resources.Metal %><br>
+  */
+
+  let pageData = {
+    username : username,
+    villageData : <Village>worldCell//,
+    //resources : resources
+  };
+
+  res.render("pages/village", pageData)
+
 })
 
 app.get('/', (req, res) => {

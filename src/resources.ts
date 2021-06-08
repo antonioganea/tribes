@@ -22,7 +22,7 @@ export function newResourceCollection() : ResourceCollection{
 // Resource Rates Data
 export const ResourceRatesData : { [key in ResourceType]: number[] } = {
     // This describes the hourly rate, for each material, based by generator structure level.
-    [ResourceType.Wood]  :     [5, 10, 25, 50, 100],
+    [ResourceType.Wood]  :     [3600, 10, 25, 50, 100],
     [ResourceType.Clay]  :     [5, 10, 25, 50, 100],
     [ResourceType.Food]  :     [5, 10, 25, 50, 100],
     [ResourceType.Metal] :     [5, 10, 25, 50, 100],
@@ -42,8 +42,8 @@ export const ResourceTypeData : { [key in ResourceType]: RTData} = {
 
 export function getResourceDelta( checkpoint: Date, resourceType: ResourceType, generatorLevel: number ) : number{
     let now = new Date();
-    let deltaSeconds = now.getSeconds() - checkpoint.getSeconds();
-    let deltaHours = deltaSeconds/1000.0;
+    let deltaSeconds = ( now.getTime() - checkpoint.getTime() ) / 1000;
+    let deltaHours = deltaSeconds/3600.0;
     let deltaMaterial = Math.floor(deltaHours * ResourceRatesData[resourceType][generatorLevel]);
 
     return deltaMaterial;

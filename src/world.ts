@@ -44,6 +44,10 @@ export class World{
         }
     }
 
+    public getCell( x : number, y : number ) : WorldCellObject {
+        return this.worldMap[y][x];
+    }
+
     public getUserVillages( username: string) : Village[]{
         return this.userVillages[username];
     }
