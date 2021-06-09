@@ -1,15 +1,9 @@
-import { Building, ResourceGenerator, BuildingType} from "./building";
-import { BuildingManager } from "./buildingmanager";
-import { MilitaryCollection, newMilitaryCollection } from "./militaryunit";
-import { ResourceManager } from "./resourcemanager";
-import { ResourceType } from "./resources";
-import { User } from "./user";
-import { WorldPosition } from "./utils";
-import { WorldCellObject } from "./world";
+import { db } from "./database";
 
 // https://stackoverflow.com/questions/16261119/typescript-objects-serialization
 
 //https://www.npmjs.com/package/better-sqlite3
+/*
 export class Village implements WorldCellObject {
     // Village major data
     private name : string;
@@ -58,5 +52,21 @@ export class Village implements WorldCellObject {
         newVillage.user = user;
 
         return newVillage
+    }
+}
+*/
+
+export namespace Village{
+
+    let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY) VALUES (?,?,?,?);`);
+    let createEmptyBuildingsStmt = db.prepare(`INSERT INTO "buildings" (villageID) VALUES (?);`);
+    let createEmptyResourcesStmt = db.prepare(`INSERT INTO "resources" (villageID, checkpointTime) VALUES (?,?);`);
+
+    export function createVillage(userID : number, name : string, x : number, y : number) {
+        let info = createVillageStmt.run(userID, name, x, y);
+        console.log(info)
+        createEmptyBuildingsStmt.run(info.lastInsertRowid);
+        createEmptyResourcesStmt.run(info.lastInsertRowid, Math.floor(new Date().getTime() / 1000));
+        console.log("Village created!");
     }
 }

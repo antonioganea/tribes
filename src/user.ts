@@ -1,11 +1,10 @@
-export class User{
-    private username : string;
+import { db } from "./database";
 
-    constructor(username :string){
-        this.username = username;
+export namespace User{
+    
+    let findUserStmt = db.prepare(`SELECT * FROM users WHERE userID=? LIMIT 1;`);
+    export function getUserWithID( userID : number ) : any {
+        return findUserStmt.get(userID);
     }
-
-    public getUsername() :string{
-        return this.username;
-    }
+    
 }

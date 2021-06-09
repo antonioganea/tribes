@@ -10,7 +10,7 @@ if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
 }
 
-const db = require('better-sqlite3')('./database/gamestate.db');
+export const db = require('better-sqlite3')('./database/gamestate.db');
 
 let initializeUsersStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "users" (
 	"userID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,

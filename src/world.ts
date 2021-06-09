@@ -1,3 +1,4 @@
+import { db } from "./database";
 import { WorldPosition } from "./utils";
 import { Village } from "./village";
 
@@ -6,6 +7,8 @@ import { Village } from "./village";
 /**
  * Interface for entities that can be in the world grid. Used for villages, forests, mountains, etc.
  */
+
+/*
 export interface WorldCellObject{
     getWorldPosition() : WorldPosition;
 }
@@ -79,17 +82,6 @@ export class World{
     }
 
     public isPositionEmpty( x: number, y: number) : boolean {
-        /*
-        // Village Lookup implementation ( obsolete ), time complexity : O(n), n villages.
-        for ( let i = 0; i < this.villages.length; i++ ){
-            let worldpos : WorldPosition = this.villages[i].getWorldPosition();
-            if (worldpos.x == x && worldpos.y == y){
-                return false; // if the space is taken by a certain village
-            }
-        }
-        return true;
-        */
-
         if ( x < 0 || x >= World.WORLD_SIZE || y < 0 || y >= World.WORLD_SIZE ){
             throw new Error("Invalid coordinates!");
         }
@@ -131,6 +123,62 @@ export class World{
         }
 
         return result;
+    }
+
+}
+*/
+
+export namespace World{
+    export const WORLD_SIZE : number = 1000; // TODO add asserts for this
+
+    let getVillageCountAtPositionStmt = db.prepare(`SELECT COUNT(*) as cnt FROM "villages" WHERE positionX=? AND positionY=?;`);
+
+    export function isVillageAtPosition( x : number, y : number ) : boolean {
+        let count = getVillageCountAtPositionStmt.get(x, y).cnt;
+        return count != 0;
+    }
+
+    export function isPositionOccupied( x : number, y : number ) : boolean {
+        // Add a more complicated condition when this gets complicated. ( forests, mountains. other entities.. )
+        // Right now it only depends if there is a village at the given position
+        return isVillageAtPosition(x, y);
+    }
+
+    let getVillagesInRectangleStmt = db.prepare(`SELECT * FROM "villages" WHERE positionX BETWEEN ? AND ? AND positionY BETWEEN ? AND ?;`);
+    export function getMapChunk( x : number, y : number, w : number, h : number ) : any {
+
+        if ( x < 0 || x+w-1 >= World.WORLD_SIZE || y < 0 || y+h-1 >= World.WORLD_SIZE ){
+            throw new Error("Invalid coordinates or outside the map!");
+        }
+
+        let data = getVillagesInRectangleStmt.all(x, x+w-1, y, y+h-1);
+
+        let result: any[][] = new Array<Array<any>>();
+
+        let initialY = y;
+
+        for ( ; y < initialY + h; y++ ){
+            let row : any[]  = new Array<any>();
+            result[y-initialY] = row;
+        }
+
+        for ( let i = 0; i < data.length; i++ ){
+            result[data[i].positionY - initialY][data[i].positionX - x] = data[i];
+        }
+
+        return result;
+    }
+
+    let getUserVillagesStmt = db.prepare(`SELECT * FROM "villages" WHERE userID=?;`);
+    export function getUserVillages( userID : number ) : any[] {
+        let villages = getUserVillagesStmt.all(userID);
+        return villages;
+    }
+
+    let getVillageStmt = db.prepare(`SELECT * FROM "villages" WHERE villageID=? LIMIT 1;`);
+    export function getVillage( villageID : number ) : any {
+        let village = getVillageStmt.get(villageID);
+        return village;
     }
 
 }

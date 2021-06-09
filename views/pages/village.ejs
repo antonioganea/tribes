@@ -14,17 +14,10 @@
 
     <div style="width:50%; margin:auto">
   
-      Village <%= villageData.name %> (<%= villageData.worldPosition.x %>x<%= villageData.worldPosition.y %>)
+      Village <%= villageData.name %> (<%= villageData.positionX %>x<%= villageData.positionY %>)
       <br>
-      Owned by : <%= villageData.user.username %>
+      Owned by : <%= owner.username %>
       <br>
-
-
-      Wood : <%= villageData.resourceManager.getCurrentResourceCount("Wood") %><br>
-      Clay : <%= villageData.resourceManager.getCurrentResourceCount("Clay") %><br>
-      Food : <%= villageData.resourceManager.getCurrentResourceCount("Food") %><br>
-      Metal : <%= villageData.resourceManager.getCurrentResourceCount("Metal") %><br>
-
 
     </div>
 
