@@ -8,6 +8,8 @@ import { WorldPosition } from "./utils";
 import { WorldCellObject } from "./world";
 
 // https://stackoverflow.com/questions/16261119/typescript-objects-serialization
+
+//https://www.npmjs.com/package/better-sqlite3
 export class Village implements WorldCellObject {
     // Village major data
     private name : string;

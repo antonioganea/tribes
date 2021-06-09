@@ -1,5 +1,30 @@
 import fs from 'fs';
 
+/*
+CREATE TABLE `buildings` (
+	`villageID`	INTEGER NOT NULL,
+	`cityHall`	INTEGER NOT NULL DEFAULT '0',
+	`barracks`	INTEGER NOT NULL DEFAULT '0',
+	`wall`	INTEGER NOT NULL DEFAULT '0',
+	`mine`	INTEGER NOT NULL DEFAULT '0',
+	`lumberjack`	INTEGER NOT NULL DEFAULT '0',
+	`claymine`	INTEGER NOT NULL DEFAULT '0',
+	`farm`	INTEGER NOT NULL DEFAULT '0',
+	FOREIGN KEY(villageID) REFERENCES villages(villageID)
+);
+
+CREATE TABLE `villages` (
+	`villageID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`username` TEXT NOT NULL,
+	`name`	TEXT NOT NULL UNIQUE,
+	`positionX`	INTEGER NOT NULL,
+	`positionY`	INTEGER NOT NULL,
+	FOREIGN KEY(username) REFERENCES users(username)
+);
+
+*/
+
+
 const sqlite3 = require('sqlite3').verbose();
 
 var dir = './database';
