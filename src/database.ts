@@ -1,8 +1,25 @@
 import fs from 'fs';
 
 /*
+CREATE TABLE `resources` (
+	`villageID`	INTEGER NOT NULL PRIMARY KEY UNIQUE,
+	`checkpointTime`	INTEGER NOT NULL DEFAULT '0',
+	`wood`	INTEGER NOT NULL DEFAULT '0',
+	`metal`	INTEGER NOT NULL DEFAULT '0',
+	`clay`	INTEGER NOT NULL DEFAULT '0',
+	`food`	INTEGER NOT NULL DEFAULT '0',
+  FOREIGN KEY(villageID) REFERENCES villages(villageID)
+);
+
+CREATE TABLE `users` (
+	`userID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`username`	TEXT NOT NULL UNIQUE,
+	`email`	TEXT NOT NULL,
+	`password`	TEXT NOT NULL
+);
+
 CREATE TABLE `buildings` (
-	`villageID`	INTEGER NOT NULL,
+	`villageID`	INTEGER NOT NULL UNIQUE PRIMARY KEY,
 	`cityHall`	INTEGER NOT NULL DEFAULT '0',
 	`barracks`	INTEGER NOT NULL DEFAULT '0',
 	`wall`	INTEGER NOT NULL DEFAULT '0',
@@ -15,11 +32,11 @@ CREATE TABLE `buildings` (
 
 CREATE TABLE `villages` (
 	`villageID`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-	`username` TEXT NOT NULL,
+	`userID` INTEGER NOT NULL,
 	`name`	TEXT NOT NULL UNIQUE,
 	`positionX`	INTEGER NOT NULL,
 	`positionY`	INTEGER NOT NULL,
-	FOREIGN KEY(username) REFERENCES users(username)
+	FOREIGN KEY(userID) REFERENCES users(userID)
 );
 
 */
