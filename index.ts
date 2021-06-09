@@ -140,6 +140,9 @@ app.get('/village', (req,res) => {
   let pageData = {
     username : username,
     villageData : village,
+    military : Village.getVillageMilitary(village.villageID),
+    buildings: Village.getVillageBuildings(village.villageID),
+    resources: Village.getVillageResources(village.villageID),
     owner : User.getUserWithID(village.userID)
     //resources : resources
   };

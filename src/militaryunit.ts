@@ -2,8 +2,10 @@ export enum MilitaryUnitType {
     Swordsman = "Swordsman",
     Axeman = "Axeman",
     Spearman = "Spearman",
+    Archer = "Archer",
     Chivalry = "Chivalry",
     AdvChivalry = "AdvChivalry",
+    Noble = "Noble"
 }
 
 export type MilitaryCollection = { [key in MilitaryUnitType]: number}
@@ -28,6 +30,8 @@ export const MilitaryUnitData : { [key in MilitaryUnitType]: MUData} = {
    [MilitaryUnitType.Swordsman]     :     new MUData(MilitaryUnitType.Swordsman, 5, 5, "Swordmsman"),
    [MilitaryUnitType.Axeman]        :     new MUData(MilitaryUnitType.Axeman, 5, 5, "Axeman"),
    [MilitaryUnitType.Spearman]      :     new MUData(MilitaryUnitType.Spearman, 5, 5, "Spearman"),
+   [MilitaryUnitType.Archer]      :       new MUData(MilitaryUnitType.Archer, 5, 5, "Archer"),
    [MilitaryUnitType.Chivalry]      :     new MUData(MilitaryUnitType.Chivalry, 5, 5, "Chivalry"),
-   [MilitaryUnitType.AdvChivalry]   :     new MUData(MilitaryUnitType.AdvChivalry, 5, 5, "AdvChivalry"),
+   [MilitaryUnitType.AdvChivalry]   :     new MUData(MilitaryUnitType.AdvChivalry, 5, 5, "Advanced Chivalry"),
+   [MilitaryUnitType.Noble]   :           new MUData(MilitaryUnitType.Noble, 5, 5, "Noble"),
 }

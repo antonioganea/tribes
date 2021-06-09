@@ -14,13 +14,109 @@
 
     <div style="width:50%; margin:auto">
   
-      Village <%= villageData.name %> (<%= villageData.positionX %>x<%= villageData.positionY %>)
+      <div style="text-align: center;">===========General Info============</div><br>
+      <div style="text-align: center;">
+        Village Name: <%= villageData.name %> (<%= villageData.positionX %>x<%= villageData.positionY %>)
+        <br>
+        Owned by : <a href="/profile/<%= owner.username %>"><%= owner.username %></a>
+      </div>
+
       <br>
-      Owned by : <%= owner.username %>
-      <br>
+
+      <div style="text-align: center;">==========Military===========</div><br>
+
+      <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+          width:14%;
+        }
+        </style>
+
+      <table>
+        <tr>
+            <td>Swordsman 🗡️</td>
+            <td>Axeman 🪓</td>
+            <td>Spearman 🍢</td>
+            <td>Archer 🏹</td>
+            <td>Chivalry 🐎</td>
+            <td>Advanced Chivalry 🐎🔱</td>
+            <td>Noble 👑</td>
+        </tr>
+        
+        <tr>
+          <td><%= military.Swordsman %></td>
+          <td><%= military.Axeman %></td>
+          <td><%= military.Spearman %></td>
+          <td><%= military.Archer %></td>
+          <td><%= military.Chivalry %></td>
+          <td><%= military.AdvChivalry %></td>
+          <td><%= military.Noble %></td>
+        </tr>
+    </table>
+
+    <br>
+    <div style="text-align: center;">==========Buildings===========</div><br>
+
+    <table>
+      <tr>
+          <td>CityHall</td>
+          <td>Barracks</td>
+          <td>Mine</td>
+          <td>Lumberjack</td>
+          <td>Claymine</td>
+          <td>Farm</td>
+          <td>Wall</td>
+      </tr>
+      
+      <tr>
+        <td><%= buildings.cityHall %></td>
+        <td><%= buildings.barracks %></td>
+        <td><%= buildings.mine %></td>
+        <td><%= buildings.lumberjack %></td>
+        <td><%= buildings.claymine %></td>
+        <td><%= buildings.farm %></td>
+        <td><%= buildings.wall %></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <div style="text-align: center;">==========Resources===========</div>
+    <div style="text-align: center;">
+      <% d = new Date() %>
+      Wood :  <span id="wood_resource"><%= Math.floor ( ( d.getTime() / 1000 - resources.checkpointTime ) * 60 / 3600  + resources.wood )%></span> 🌳 |
+      Metal : <span id="metal_resource"><%= Math.floor ( ( d.getTime() / 1000 - resources.checkpointTime ) * 60 / 3600  + resources.metal )%></span> 🔩 |
+      Clay :  <span id="clay_resource"><%= Math.floor ( ( d.getTime() / 1000 - resources.checkpointTime ) * 60 / 3600  + resources.clay )%></span> 🧱 |
+      Food :  <span id="food_resource"><%= Math.floor ( ( d.getTime() / 1000 - resources.checkpointTime ) * 60 / 3600  + resources.food )%></span> 🌿
+    </div>
+
+
 
     </div>
 
+    <script>
+    function setResources() {
+
+      let d = new Date();
+      let v = Math.floor ( ( d.getTime() / 1000 - <%=resources.checkpointTime %> ) * 60 / 3600  + <%= resources.wood %> )
+      document.getElementById('wood_resource').innerHTML = v;
+      v = Math.floor ( ( d.getTime() / 1000 - <%=resources.checkpointTime %> ) * 60 / 3600  + <%= resources.metal %> )
+      document.getElementById('metal_resource').innerHTML = v;
+      v = Math.floor ( ( d.getTime() / 1000 - <%=resources.checkpointTime %> ) * 60 / 3600  + <%= resources.clay %> )
+      document.getElementById('clay_resource').innerHTML = v;
+      v = Math.floor ( ( d.getTime() / 1000 - <%=resources.checkpointTime %> ) * 60 / 3600  + <%= resources.food %> )
+      document.getElementById('food_resource').innerHTML = v;
+      //var t = setTimeout(startTime, 1000);
+    }
+    setInterval(setResources, 1000);
+    </script>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

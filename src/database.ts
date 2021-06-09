@@ -41,6 +41,18 @@ let initializeBuildingsStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "buildings"
 	FOREIGN KEY(villageID) REFERENCES villages(villageID)
 );`)
 
+let initializeMilitaryStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "military" (
+	"villageID"	INTEGER NOT NULL UNIQUE PRIMARY KEY,
+	"Swordsman"	INTEGER NOT NULL DEFAULT '0',
+	"Axeman"	INTEGER NOT NULL DEFAULT '0',
+	"Spearman"	INTEGER NOT NULL DEFAULT '0',
+	"Archer"	INTEGER NOT NULL DEFAULT '0',
+	"Chivalry"	INTEGER NOT NULL DEFAULT '0',
+	"AdvChivalry"	INTEGER NOT NULL DEFAULT '0',
+	"Noble"	INTEGER NOT NULL DEFAULT '0',
+	FOREIGN KEY(villageID) REFERENCES villages(villageID)
+);`)
+
 let initializeVillagesStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "villages" (
 	"villageID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	"userID" INTEGER NOT NULL,
@@ -52,9 +64,10 @@ let initializeVillagesStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "villages" (
 
 function initDatabase(){
   initializeUsersStmt.run();
+  initializeVillagesStmt.run();
   initializeResourcesStmt.run();
   initializeBuildingsStmt.run();
-  initializeVillagesStmt.run();
+  initializeMilitaryStmt.run();
 
   console.log("Database initialized!");
 }
