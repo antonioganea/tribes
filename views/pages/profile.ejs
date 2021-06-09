@@ -19,8 +19,8 @@
   
       Villages:<br>
       <% for ( let i = 0; i < userVillages.length; i++) {%>
-        <a href="/village/?x=<%= userVillages[i].getWorldPosition().x %>&y=<%= userVillages[i].getWorldPosition().y %>"><%= userVillages[i].name %> (<%= userVillages[i].getWorldPosition().x %>x<%= userVillages[i].getWorldPosition().y %>)</a>
-
+        <a href="/village/?villageID=<%= userVillages[i].villageID %>"><%= userVillages[i].name %> (<%= userVillages[i].positionX %>x<%= userVillages[i].positionY %>)</a>
+        <br>
       <% } %>
     </div>
 

@@ -6,9 +6,6 @@
     width: 40%;
 }
 
-body{
-    background:#DCDCDC;
-}
 .card-box {
     padding: 20px;
     border-radius: 3px;
@@ -57,9 +54,9 @@ h4 {
     font-size: 18px;
 }
 body {
-    color: #1a202c;
+    color: #F4C95D;
     text-align: left;
-    background-color: #e2e8f0;    
+    background-color :#1A090D; 
 }
 .main-body {
     padding: 15px;

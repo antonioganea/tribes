@@ -1,5 +1,4 @@
 import express from 'express';
-let ejs = require('ejs');
 
 import {findUser, insertUser} from './src/database';
 
@@ -8,11 +7,8 @@ import { newMilitaryCollection, MilitaryCollection, MilitaryUnitData, MilitaryUn
 import { Village } from './src/village';
 import { User } from './src/user';
 import { World } from './src/world';
-import { inspect } from 'util' // or directly
-import { ResourceType } from './src/resources';
 
-let mycollection : MilitaryCollection = newMilitaryCollection();
-
+/*
 let user: User = new User("antonio");
 
 let village : Village = Village.createVillage("Valea Regilor", new WorldPosition(500, 500), user);
@@ -26,7 +22,17 @@ world.addForest(502,501);
 world.addForest(502,502);
 
 console.log(world.getMapChunk(499, 499, 3, 3));
+*/
 
+//Village.createVillage(2,"Valea Boilor2", 502,501);
+
+/*
+console.log("Checking positions");
+console.log(World.isPositionOccupied(501,501))
+console.log(World.isPositionOccupied(510,505))
+*/
+
+console.log(World.getMapChunk(499,499,5,5))
 
 // rest of the code remains same
 const app = express();
@@ -114,47 +120,30 @@ app.get('/profile/:user/', (req,res) => {
 
   findUser(username, (err: any, row: any) => {
     console.log(row);
-
-    const modelsFolder = 'public/data/' + username;
-    const fs = require('fs');
-    let models : string[] = [];
-    
-    if (fs.existsSync(modelsFolder))
-      models = fs.readdirSync(modelsFolder);
   
     let pageData = {
       profileData: row,
-      userVillages : world.getUserVillages(username)
+      userVillages : World.getUserVillages(row.userID)
     };
   
     res.render("pages/profile", pageData)
   })
+
 })
 
 app.get('/village', (req,res) => {
+
   let username : string = (<any>req.user).username;
 
-  let worldCell = world.getCell(parseInt(<any>req.query.x), parseInt(<any>req.query.y))
-
-  /*
-  let resources = {
-    "Wood" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Wood),
-    "Clay" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Clay),
-    "Food" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Food),
-    "Metal" : (<Village>worldCell).getResourceManager().getCurrentResourceCount(ResourceType.Metal)
-  }
-  */
-
-  /*
-        Wood : <%= resources.Wood %><br>
-        Clay : <%= resources.Clay %><br>
-        Food : <%= resources.Food %><br>
-        Metal : <%= resources.Metal %><br>
-  */
+  let village = World.getVillage(parseInt(<any>req.query.villageID))
 
   let pageData = {
     username : username,
-    villageData : <Village>worldCell//,
+    villageData : village,
+    military : Village.getVillageMilitary(village.villageID),
+    buildings: Village.getVillageBuildings(village.villageID),
+    resources: Village.getVillageResources(village.villageID),
+    owner : User.getUserWithID(village.userID)
     //resources : resources
   };
 
@@ -175,7 +164,8 @@ app.get('/', (req, res) => {
       }
     }
 
-    data["mapChunk"] = world.getMapChunk(499, 499, 8, 8)
+    data["mapChunk"] = World.getMapChunk(499, 499, 8, 8)
+    //data["mapChunk"] = [[],[],[],[], [],[],[],[]]
 
     res.render("pages/index", data);
   }
