@@ -91,7 +91,7 @@
                     <td><%= y %></td>
                     <% for ( let x = 0; x < 8; x ++ ) { 
                         if ( mapChunk[y][x] ) { %>
-                          <td style="width:100px; height:100px; color:red"><%= mapChunk[y][x].name  %></td>
+                          <td style="width:100px; height:100px; color:red"><a href="/village/?villageID=<%= mapChunk[y][x].villageID %>"><%= mapChunk[y][x].name %></a></td>
                     <% } else { %> <td style="width:100px; height:100px"></td> <% }
                 } %>
                 </tr>
