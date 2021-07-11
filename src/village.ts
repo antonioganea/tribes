@@ -56,34 +56,3 @@ export class Village implements WorldCellObject {
 }
 */
 
-export namespace Village{
-
-    let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY) VALUES (?,?,?,?);`);
-    let createEmptyBuildingsStmt = db.prepare(`INSERT INTO "buildings" (villageID) VALUES (?);`);
-    let createEmptyMilitaryStmt = db.prepare(`INSERT INTO "military" (villageID) VALUES (?);`);
-    let createEmptyResourcesStmt = db.prepare(`INSERT INTO "resources" (villageID, checkpointTime) VALUES (?,?);`);
-
-    export function createVillage(userID : number, name : string, x : number, y : number) {
-        let info = createVillageStmt.run(userID, name, x, y);
-        console.log(info)
-        createEmptyBuildingsStmt.run(info.lastInsertRowid);
-        createEmptyMilitaryStmt.run(info.lastInsertRowid);
-        createEmptyResourcesStmt.run(info.lastInsertRowid, Math.floor(new Date().getTime() / 1000));
-        console.log("Village created!");
-    }
-
-    let getVillageMilitaryStmt = db.prepare(`SELECT * FROM "military" WHERE villageID=? LIMIT 1;`);
-    export function getVillageMilitary( villageID : number ) : any {
-        return getVillageMilitaryStmt.get(villageID);
-    }
-
-    let getVillageBuildingsStmt = db.prepare(`SELECT * FROM "buildings" WHERE villageID=? LIMIT 1;`);
-    export function getVillageBuildings( villageID : number ) : any {
-        return getVillageBuildingsStmt.get(villageID);
-    }
-
-    let getVillageResourcesStmt = db.prepare(`SELECT * FROM "resources" WHERE villageID=? LIMIT 1;`);
-    export function getVillageResources( villageID : number ) : any {
-        return getVillageResourcesStmt.get(villageID);
-    }
-}

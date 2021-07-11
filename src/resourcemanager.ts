@@ -1,11 +1,10 @@
-import { Building } from "./building";
+import { VillageHandle } from "./objectwrappers";
 import { getResourceDelta, newResourceCollection, ResourceCollection, ResourceType } from "./resources";
-import { Village } from "./village";
 
 export class ResourceManager{
-    private village : Village;
+    private village : VillageHandle;
 
-    constructor ( village : Village, date : Date ){
+    constructor ( village : VillageHandle, date : Date ){
         this.village = village;
         this.resourceCheckpoint = date;
     }
@@ -24,10 +23,13 @@ export class ResourceManager{
      * @returns The number of that specified resource at this point in time.
      */
     public getCurrentResourceCount( resourceType: ResourceType ) : number{
+        /*
         let generatorLevel = this.village.getGeneratorByResourceType(resourceType).getLevel();
         let resourceDelta = getResourceDelta(this.resourceCheckpoint, resourceType, generatorLevel);
 
         return this.checkpointResources[resourceType] + resourceDelta;
+        */
+       return 0;
     }
 
     /**

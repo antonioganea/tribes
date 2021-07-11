@@ -1,6 +1,6 @@
 import { MilitaryCollection } from "./militaryunit";
+import { VillageHandle } from "./objectwrappers";
 import { ResourceCollection } from "./resources";
-import { Village } from "./village";
 
 /**
  * Utilitary functions collection that deals with wars.
@@ -23,7 +23,7 @@ export namespace Combat{
      * @param village The target village
      * @returns a WarOutcome object.
      */
-    export function computeWar( attackers : MilitaryCollection, village : Village ) : WarOutcome{
+    export function computeWar( attackers : MilitaryCollection, village : VillageHandle ) : WarOutcome{
         let outcome : WarOutcome = new WarOutcome();
 
         // .. implement ..
@@ -36,7 +36,7 @@ export namespace Combat{
      * @param outcome the WarOutcome object that was computed previously
      * @param village the target village
      */
-    export function applyWarOutcomeOnVillage ( outcome : WarOutcome, village : Village ) : void {
+    export function applyWarOutcomeOnVillage ( outcome : WarOutcome, village : VillageHandle ) : void {
         // implement
     }
 }

@@ -4,9 +4,8 @@ import {findUser, insertUser} from './src/database';
 
 import { WorldPosition } from './src/utils';
 import { newMilitaryCollection, MilitaryCollection, MilitaryUnitData, MilitaryUnitType } from './src/militaryunit';
-import { Village } from './src/village';
 import { User } from './src/user';
-import { World } from './src/world';
+import { Globals } from './src/queries';
 
 /*
 let user: User = new User("antonio");
@@ -32,7 +31,7 @@ console.log(World.isPositionOccupied(501,501))
 console.log(World.isPositionOccupied(510,505))
 */
 
-console.log(World.getMapChunk(499,499,5,5))
+console.log(Globals.getMapChunk(499,499,5,5))
 
 // rest of the code remains same
 const app = express();
@@ -123,7 +122,7 @@ app.get('/profile/:user/', (req,res) => {
   
     let pageData = {
       profileData: row,
-      userVillages : World.getUserVillages(row.userID)
+      userVillages : Globals.getUserVillages(row.userID)
     };
   
     res.render("pages/profile", pageData)
@@ -135,14 +134,14 @@ app.get('/village', (req,res) => {
 
   let username : string = (<any>req.user).username;
 
-  let village = World.getVillage(parseInt(<any>req.query.villageID))
+  let village = Globals.getVillage(parseInt(<any>req.query.villageID))
 
   let pageData = {
     username : username,
     villageData : village,
-    military : Village.getVillageMilitary(village.villageID),
-    buildings: Village.getVillageBuildings(village.villageID),
-    resources: Village.getVillageResources(village.villageID),
+    military : Globals.getVillageMilitary(village.villageID),
+    buildings: Globals.getVillageBuildings(village.villageID),
+    resources: Globals.getVillageResources(village.villageID),
     owner : User.getUserWithID(village.userID)
     //resources : resources
   };
@@ -164,7 +163,7 @@ app.get('/', (req, res) => {
       }
     }
 
-    data["mapChunk"] = World.getMapChunk(499, 499, 8, 8)
+    data["mapChunk"] = Globals.getMapChunk(499, 499, 8, 8)
     //data["mapChunk"] = [[],[],[],[], [],[],[],[]]
 
     res.render("pages/index", data);
