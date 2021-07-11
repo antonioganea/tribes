@@ -1,5 +1,6 @@
 import { db } from "./database";
 import { VillageHandle } from "./objectwrappers";
+import { WorldPosition } from "./utils";
 
 export namespace Globals{
     export const WORLD_SIZE : number = 1000; // TODO add asserts for this
@@ -83,5 +84,23 @@ export namespace Globals{
     export function getVillage( villageID : number ) : any {
         let village = getVillageStmt.get(villageID);
         return village;
+    }
+
+    let getVillageNameStmt = db.prepare(`SELECT name FROM "villages" WHERE villageID=? LIMIT 1;`);
+    export function getVillageName( villageID : number ) : string {
+        let village = getVillageNameStmt.get(villageID);
+        return village.name;
+    }
+
+    let getVillagePositionStmt = db.prepare(`SELECT positionX, positionY FROM "villages" WHERE villageID=? LIMIT 1;`);
+    export function getVillagePosition( villageID : number ) : WorldPosition {
+        let village = getVillagePositionStmt.get(villageID);
+        return new WorldPosition(village.locationX, village.locationY);
+    }
+
+    let getVillageOwnerIDStmt = db.prepare(`SELECT userID FROM "villages" WHERE villageID=? LIMIT 1;`);
+    export function getVillageOwnerID( villageID: number ) : number {
+        let village = getVillageOwnerIDStmt.get(villageID);
+        return village.userID;
     }
 }

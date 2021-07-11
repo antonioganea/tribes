@@ -2,6 +2,7 @@
  * This file describes the object-like wrappers used in this codebase architecture.
  */
 
+import { Globals } from "./queries";
 import { WorldPosition } from "./utils";
 
 
@@ -48,20 +49,24 @@ export class UserHandle{
         return this.userID;
     }
 
+    // TODO : implement
     get username() : string{
         return "username";
     }
 
+    // TODO : implement
     get password() : string{
         return "password";
     }
 
+    // TODO : implement
     get villages() : VillageHandle[] {
         return [new VillageHandle(50)];
     }
 
     // Methods
 
+    // TODO : implement
     public getDBRow() : any {
         return null;
     }
@@ -80,25 +85,21 @@ export class VillageHandle{
         return this.villageID;
     }
 
-    // TODO : implement
     get name() : string{
-        return "name";
+        return Globals.getVillageName(this.villageID);
     }
 
-    // TODO : implement
     get location() : WorldPosition {
-        return new WorldPosition(50,50);
+        return Globals.getVillagePosition(this.villageID);
     }
 
-    // TODO : implement
     get owner() : UserHandle{
-        return new UserHandle(5);
+        return new UserHandle(Globals.getVillageOwnerID(this.villageID));
     }
 
     // Methods
 
-    // TODO : implement
     public getDBRow() : any {
-        return null;
+        return Globals.getVillage(this.villageID);
     }
 }
