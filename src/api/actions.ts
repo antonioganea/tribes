@@ -1,7 +1,7 @@
 import express from "express";
 import { findUser } from "../model/database";
+import { VillageHandle, World } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
-import { User } from "../model/user";
 
 export function setAppActionsMiddleware(app : express.Express){
 
@@ -27,17 +27,11 @@ export function setAppActionsMiddleware(app : express.Express){
     
         let username : string = (<any>req.user).username;
     
-        let village = Globals.getVillage(parseInt(<any>req.query.villageID))
-    
-        let pageData = {
-        username : username,
-        villageData : village,
-        military : Globals.getVillageMilitary(village.villageID),
-        buildings: Globals.getVillageBuildings(village.villageID),
-        resources: Globals.getVillageResources(village.villageID),
-        owner : User.getUserWithID(village.userID)
-        //resources : resources
-        };
+        let village = World.getVillage(<any>req.query.villageID);
+
+        let pageData = village.getPageData();
+
+        pageData["username"] = username;
     
         res.render("pages/village", pageData)
     

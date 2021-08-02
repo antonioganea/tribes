@@ -103,4 +103,9 @@ export namespace Globals{
         let village = getVillageOwnerIDStmt.get(villageID);
         return village.userID;
     }
+
+    let findUserStmt = db.prepare(`SELECT * FROM users WHERE userID=? LIMIT 1;`);
+    export function getUserWithID( userID : number ) : any {
+        return findUserStmt.get(userID);
+    }
 }
