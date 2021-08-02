@@ -1,6 +1,6 @@
 import express from "express";
 import { findUser } from "../model/database";
-import { VillageHandle } from "../model/objectwrappers";
+import { VillageHandle, World } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
 
 export function setAppActionsMiddleware(app : express.Express){
@@ -27,7 +27,7 @@ export function setAppActionsMiddleware(app : express.Express){
     
         let username : string = (<any>req.user).username;
     
-        let village = new VillageHandle(<any>req.query.villageID);
+        let village = World.getVillage(<any>req.query.villageID);
 
         let pageData = village.getPageData();
 

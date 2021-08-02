@@ -7,17 +7,17 @@ import { WorldPosition } from "./utils";
 
 
 /*
- World.getVillage(villageID) |
- |.getVillage(X,Y)       |
-                         \=> VillageHandle
+ World.getVillage(villageID)     |
+     |.getVillageByCoords(X,Y)   |
+                                 \=> VillageHandle
 \+ .id => number
 \+ .getName() => string
 \+ .getLocation() => WorldPosition
 \+ .getDBRow() => any ( object )
 
-getUser(userName)|
-getUser(userID)  |
-              \=> UserHandle
+ World.getUser(userName) |
+      .getUser(userID)   |
+                         \=> UserHandle
 
 .id => number
 .getUsername() => string
@@ -25,6 +25,26 @@ getUser(userID)  |
 .getDBRow() => any ( object )
 .getVillages() => VillageHandle[]
 */
+
+export namespace World{
+    export function getVillage(villageID : number) : VillageHandle {
+        return new VillageHandle(villageID);
+    }
+
+    // TODO : implement
+    export function getVillageByCoords(x : number, y : number) : VillageHandle {
+        return new VillageHandle(1);
+    }
+
+    export function getUser(userID : number) : UserHandle {
+        return new UserHandle(userID);
+    }
+
+    // TODO : implement
+    export function getUserByName(name : string) : UserHandle {
+        return new UserHandle(1);
+    }
+}
 
 export enum BuildingType {
     Mine = "Mine",
