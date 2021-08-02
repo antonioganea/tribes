@@ -3,6 +3,7 @@
  */
 
 import { Globals } from "./queries";
+import { User } from "./user";
 import { WorldPosition } from "./utils";
 
 
@@ -66,9 +67,8 @@ export class UserHandle{
 
     // Methods
 
-    // TODO : implement
     public getDBRow() : any {
-        return null;
+        return User.getUserWithID(this.userID);
     }
 }
 
@@ -101,5 +101,19 @@ export class VillageHandle{
 
     public getDBRow() : any {
         return Globals.getVillage(this.villageID);
+    }
+
+    public getPageData() : any {
+        
+        let pageData = {
+            villageData : this.getDBRow(),
+            military : Globals.getVillageMilitary(this.villageID),
+            buildings: Globals.getVillageBuildings(this.villageID),
+            resources: Globals.getVillageResources(this.villageID),
+            owner : this.owner.getDBRow()
+            //resources : resources
+        };
+
+        return pageData;
     }
 }
