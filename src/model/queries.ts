@@ -108,4 +108,14 @@ export namespace Globals{
     export function getUserWithID( userID : number ) : any {
         return findUserStmt.get(userID);
     }
+    
+    let getUserPasswordStmt = db.prepare(`SELECT password FROM users WHERE userID=? LIMIT 1;`);
+    export function getUserPassword( userID : number ) : any {
+        return getUserPasswordStmt.get(userID).password;
+    }
+
+    let getUserUsernameStmt = db.prepare(`SELECT username FROM users WHERE userID=? LIMIT 1;`);
+    export function getUserUsername( userID : number ) : any {
+        return getUserUsernameStmt.get(userID).username;
+    }
 }

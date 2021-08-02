@@ -69,14 +69,12 @@ export class UserHandle{
         return this.userID;
     }
 
-    // TODO : implement
     get username() : string{
-        return "username";
+        return Globals.getUserUsername(this.userID);
     }
 
-    // TODO : implement
     get password() : string{
-        return "password";
+        return Globals.getUserPassword(this.userID);
     }
 
     // TODO : implement
