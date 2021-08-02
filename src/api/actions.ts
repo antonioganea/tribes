@@ -2,7 +2,6 @@ import express from "express";
 import { findUser } from "../model/database";
 import { VillageHandle } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
-import { User } from "../model/user";
 
 export function setAppActionsMiddleware(app : express.Express){
 
@@ -31,7 +30,7 @@ export function setAppActionsMiddleware(app : express.Express){
         let village = new VillageHandle(<any>req.query.villageID);
 
         let pageData = village.getPageData();
-        
+
         pageData["username"] = username;
     
         res.render("pages/village", pageData)
