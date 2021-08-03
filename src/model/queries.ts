@@ -128,5 +128,10 @@ export namespace Globals{
     export function getVillageIdByCoords( x : number, y : number ) : number {
         return getVillageIdByCoordsStmt.get(x, y).villageID;
     }
+
+    let getAllVillagesOfUserStmt = db.prepare(`SELECT villageID FROM villages WHERE userID=?;`);
+    export function getAllVillagesOfUser( userID : number ) : any {
+        return getAllVillagesOfUserStmt.all(userID);
+    }
  
 }

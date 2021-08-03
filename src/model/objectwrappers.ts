@@ -75,9 +75,16 @@ export class UserHandle{
         return Globals.getUserPassword(this.userID);
     }
 
-    // TODO : implement
     get villages() : VillageHandle[] {
-        return [new VillageHandle(50)];
+        let data = Globals.getAllVillagesOfUser(this.userID);
+        
+        let output = [];
+
+        for ( let i = 0; i < data.length; i++ ){
+            output.push(new VillageHandle(data[i].villageID));
+        }
+
+        return output;
     }
 
     // Methods

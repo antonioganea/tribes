@@ -2,6 +2,7 @@ import express from 'express';
 import { Globals } from './src/model/queries';
 import { setAppPassportMiddleware } from './src/api/login';
 import { setAppActionsMiddleware } from './src/api/actions';
+import { World } from './src/model/objectwrappers';
 
 /*
 let user: User = new User("antonio");
@@ -37,6 +38,8 @@ app.use(express.static('public'))
 setAppPassportMiddleware(app);
 setAppActionsMiddleware(app);
 
+
+World.getUserByName("antonio").villages.forEach((x) => console.log(x.name))
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
