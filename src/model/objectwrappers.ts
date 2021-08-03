@@ -31,18 +31,16 @@ export namespace World{
         return new VillageHandle(villageID);
     }
 
-    // TODO : implement
     export function getVillageByCoords(x : number, y : number) : VillageHandle {
-        return new VillageHandle(1);
+        return new VillageHandle(Globals.getVillageIdByCoords(x, y));
     }
 
     export function getUser(userID : number) : UserHandle {
         return new UserHandle(userID);
     }
 
-    // TODO : implement
     export function getUserByName(name : string) : UserHandle {
-        return new UserHandle(1);
+        return new UserHandle(Globals.getUserIDByUsername(name));
     }
 }
 

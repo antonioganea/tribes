@@ -108,14 +108,25 @@ export namespace Globals{
     export function getUserWithID( userID : number ) : any {
         return findUserStmt.get(userID);
     }
+
+    let getUserIdByUsernameStmt = db.prepare(`SELECT userID FROM users WHERE username=? LIMIT 1;`);
+    export function getUserIDByUsername( username : string ) : number {
+        return getUserIdByUsernameStmt.get(username).userID;
+    }
     
     let getUserPasswordStmt = db.prepare(`SELECT password FROM users WHERE userID=? LIMIT 1;`);
-    export function getUserPassword( userID : number ) : any {
+    export function getUserPassword( userID : number ) : string {
         return getUserPasswordStmt.get(userID).password;
     }
 
     let getUserUsernameStmt = db.prepare(`SELECT username FROM users WHERE userID=? LIMIT 1;`);
-    export function getUserUsername( userID : number ) : any {
+    export function getUserUsername( userID : number ) : string {
         return getUserUsernameStmt.get(userID).username;
     }
+
+    let getVillageIdByCoordsStmt = db.prepare(`SELECT villageID FROM villages WHERE positionX=? AND positionY=? LIMIT 1;`);
+    export function getVillageIdByCoords( x : number, y : number ) : number {
+        return getVillageIdByCoordsStmt.get(x, y).villageID;
+    }
+ 
 }
