@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Express } from "express";
 import { findUser } from "../model/database";
 import { VillageHandle, World } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
 
-export function setAppActionsMiddleware(app : express.Express){
+export function setAppActionsMiddleware(app : any){
 
     // render the profile of an user
     app.get('/profile/:user/', (req,res) => {
@@ -50,7 +50,7 @@ export function setAppActionsMiddleware(app : express.Express){
             }
         }
     
-        data["mapChunk"] = Globals.getMapChunk(499, 499, 8, 8)
+        data["mapChunk"] = Globals.getMapChunk(0, 0, 8, 8)
         //data["mapChunk"] = [[],[],[],[], [],[],[],[]]
     
         res.render("pages/index", data);

@@ -70,7 +70,7 @@ export class UserHandle{
     get villages() : VillageHandle[] {
         let data = Globals.getAllVillagesOfUser(this.userID);
 
-        let output = [];
+        let output : VillageHandle [] = [];
 
         for ( let i = 0; i < data.length; i++ ){
             output.push(new VillageHandle(data[i].villageID));

@@ -1,7 +1,7 @@
 import { findUser, insertUser } from "../model/database";
 import express from 'express';
 
-export function setAppPassportMiddleware(app : express.Express){
+export function setAppPassportMiddleware(app : any){
     
     // PASSPORT JS PART
     var passport = require('passport');

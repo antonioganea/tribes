@@ -39,7 +39,7 @@ setAppPassportMiddleware(app);
 setAppActionsMiddleware(app);
 
 
-World.getUserByName("antonio").villages.forEach((x) => console.log(x.name))
+//World.getUserByName("antonio").villages.forEach((x) => console.log(x.name))
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
