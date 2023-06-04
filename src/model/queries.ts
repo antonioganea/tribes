@@ -1,9 +1,14 @@
+import { BuildingType } from "./building";
 import { db } from "./database";
 import { VillageHandle } from "./objectwrappers";
 import { WorldPosition } from "./utils";
 
 export namespace Globals{
     export const WORLD_SIZE : number = 1000; // TODO add asserts for this
+
+    export function init(){
+        generateBuildingLevelQueries();
+    }
 
     let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY) VALUES (?,?,?,?);`);
     let createEmptyBuildingsStmt = db.prepare(`INSERT INTO "buildings" (villageID) VALUES (?);`);
@@ -133,5 +138,25 @@ export namespace Globals{
     export function getAllVillagesOfUser( userID : number ) : any {
         return getAllVillagesOfUserStmt.all(userID);
     }
- 
+    
+    let setBuildingLevelStmts = {};
+    let getBuildingLevelStmts = {};
+    
+    function generateBuildingLevelQueries(){
+        const values = Object.values(BuildingType);
+        values.forEach((value, index) => {
+            setBuildingLevelStmts[value] = db.prepare(`UPDATE buildings SET ` + value + ` = ? WHERE villageID = ?;`)
+            getBuildingLevelStmts[value] = db.prepare(`SELECT ` + value + ` FROM buildings WHERE villageID = ?;`)
+        });
+    }
+
+    export function setBuildingLevel( villageID : number, building : BuildingType, level : number ) : any {
+        return setBuildingLevelStmts[building].run(level, villageID);
+    }
+
+    export function getBuildingLevel( villageID : number, building : BuildingType ) : number {
+        return getBuildingLevelStmts[building].get(villageID)[building];
+    }
 }
+
+Globals.init();

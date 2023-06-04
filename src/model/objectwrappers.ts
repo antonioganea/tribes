@@ -2,6 +2,7 @@
  * This file describes the object-like wrappers used in this codebase architecture.
  */
 
+import { BuildingType } from "./building";
 import { MilitaryUnitType } from "./militaryunit";
 import { Globals } from "./queries";
 import { ResourceCollection, ResourceType } from "./resources";
@@ -162,16 +163,6 @@ export class MilitaryHandle{
     }
 }
 
-export enum BuildingType {
-    Mine = "Mine",
-    Lumberjack = "Lumberjack",
-    ClayMine = "ClayMine",
-    Farm = "Farm",
-    Barracks = "Barracks",
-    CityHall = "CityHall",
-    Wall = "Wall"
-}
-
 export class BuildingsHandle{
     public readonly villageID : number;
 
@@ -179,23 +170,30 @@ export class BuildingsHandle{
         this.villageID = villageID;
     }
 
-    // TODO : implement
     public setLevel( buildingType : BuildingType, level : number ) : boolean {
+        Globals.setBuildingLevel(this.villageID, buildingType, level);
         return true;
     }
 
-    // TODO : implement
     public getLevel( buildingType : BuildingType ) : number {
-        return 0;
+        return Globals.getBuildingLevel(this.villageID, buildingType);
     }
 
     // TODO : implement
     public getMaxLevel( buildingType : BuildingType ) : number {
-        return 0;
+        return 30;
     }
 
     public upgradeLevel ( buildingType : BuildingType ) : boolean {
-        return false;
+        let currentLevel = this.getLevel(buildingType);
+        currentLevel += 1;
+
+        if (currentLevel > this.getMaxLevel(buildingType)){
+            return false;
+        }
+
+        this.setLevel(buildingType, currentLevel);
+        return true;
     }
 }
 

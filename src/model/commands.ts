@@ -1,7 +1,8 @@
 // Types of commands
 
+import { BuildingType } from "./building";
 import { MilitaryCollection } from "./militaryunit";
-import { BuildingType, VillageHandle } from "./objectwrappers";
+import { VillageHandle } from "./objectwrappers";
 import { ResourceCollection } from "./resources";
 
 // one time:

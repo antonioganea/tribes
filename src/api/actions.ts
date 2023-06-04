@@ -1,8 +1,9 @@
 import express, { Express } from "express";
 import { findUser } from "../model/database";
-import { BuildingType, VillageHandle, World } from "../model/objectwrappers";
+import { VillageHandle, World } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
 import { Commands, CommandType } from "../model/commands";
+import { BuildingType } from "../model/building";
 
 export function setAppActionsMiddleware(app : any){
 
@@ -65,11 +66,18 @@ export function setAppActionsMiddleware(app : any){
         //inverse lookup : for this : Building.GetType(string) => BuildingType
 
         let btype : BuildingType = BuildingType.CityHall;
+
+
+        village.buildings.upgradeLevel(buildingType);
+
+        res.redirect("/building/cityhall?villageID="+villageID)
     
+        /*
         let time = 1000; //in seconds
         Commands.QueueUpgrade(time, village, btype);
     
-        res.send(`Building lumberjack in ${village.name}! Command will be ready in ${time} seconds.`)
+        res.send(`Building lumberjack in ${village.getDBRow().name}! Command will be ready in ${time} seconds.`)
+        */
     })
     
     
