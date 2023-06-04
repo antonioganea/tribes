@@ -10,11 +10,11 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <%- include('../partials/navbar', {username: username}); %>
+    <%- include('../../partials/navbar', {username: username}); %>
 
     <div style="width:50%; margin:auto">
   
-      <div style="text-align: center;">===========General Info============</div><br>
+      <div style="text-align: center;">===========City Hall============</div><br>
       <div style="text-align: center;">
         Village Name: <a href="/village/?villageID=<%= villageData.villageID %>"><%= villageData.name %></a> (<%= villageData.positionX %>x<%= villageData.positionY %>)
         <br>
@@ -22,8 +22,6 @@
       </div>
 
       <br>
-
-      <div style="text-align: center;">==========Military===========</div><br>
 
       <style>
         table {
@@ -39,50 +37,71 @@
         }
         </style>
 
-      <table>
-        <tr>
-            <td>Swordsman 🗡️</td>
-            <td>Axeman 🪓</td>
-            <td>Spearman 🍢</td>
-            <td>Archer 🏹</td>
-            <td>Chivalry 🐎</td>
-            <td>Advanced Chivalry 🐎🔱</td>
-            <td>Noble 👑</td>
-        </tr>
-        
-        <tr>
-          <td><%= military.Swordsman %></td>
-          <td><%= military.Axeman %></td>
-          <td><%= military.Spearman %></td>
-          <td><%= military.Archer %></td>
-          <td><%= military.Chivalry %></td>
-          <td><%= military.AdvChivalry %></td>
-          <td><%= military.Noble %></td>
-        </tr>
-    </table>
-
     <br>
     <div style="text-align: center;">==========Buildings===========</div><br>
 
     <table>
       <tr>
+        <td>Building</td>
+        <td>Current Level</td>
+        <td>Resources to next level</td>
+        <td>Time to build</td>
+        <td>Action</td>
+      </tr>
+      <tr>
           <td><a href="/building/cityhall?villageID=<%= villageData.villageID %>">CityHall</a></td>
-          <td><a href="/building/barracks?villageID=<%= villageData.villageID %>">Barracks</a></td>
-          <td><a href="/building/mine?villageID=<%= villageData.villageID %>">Mine</a></td>
-          <td><a href="/building/lumberjack?villageID=<%= villageData.villageID %>">Lumberjack</a></td>
-          <td><a href="/building/claymine?villageID=<%= villageData.villageID %>">Claymine</a></td>
-          <td><a href="/building/farm?villageID=<%= villageData.villageID %>">Farm</a></td>
-          <td><a href="/building/wall?villageID=<%= villageData.villageID %>">Wall</a></td>
+          <td><%= buildings.cityHall %></td>
+          <td>100🌳 50🔩 120🧱 20🌿</td>
+          <td>30m</td>
+          <td><a href="/building/upgrade/">Upgrade</a></td>
       </tr>
       
       <tr>
-        <td><%= buildings.cityHall %></td>
+        <td><a href="/building/barracks?villageID=<%= villageData.villageID %>">Barracks</a></td>
         <td><%= buildings.barracks %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
+      </tr>
+
+      <tr>
+        <td><a href="/building/mine?villageID=<%= villageData.villageID %>">Mine</a></td>
         <td><%= buildings.mine %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
+      </tr>
+
+      <tr>
+        <td><a href="/building/lumberjack?villageID=<%= villageData.villageID %>">Lumberjack</a></td>
         <td><%= buildings.lumberjack %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
+      </tr>
+
+      <tr>
+        <td><a href="/building/claymine?villageID=<%= villageData.villageID %>">Claymine</a></td>
         <td><%= buildings.claymine %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
+      </tr>
+
+      <tr>
+        <td><a href="/building/farm?villageID=<%= villageData.villageID %>">Farm</a></td>
         <td><%= buildings.farm %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
+      </tr>
+
+      <tr>
+        <td><a href="/building/wall?villageID=<%= villageData.villageID %>">Wall</a></td>
         <td><%= buildings.wall %></td>
+        <td>100🌳 50🔩 120🧱 20🌿</td>
+        <td>30m</td>
+        <td><a href="/building/upgrade/">Upgrade</a></td>
       </tr>
     </table>
 

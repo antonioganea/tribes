@@ -36,6 +36,20 @@ export function setAppActionsMiddleware(app : any){
         res.render("pages/village", pageData)
     
     })
+
+    app.get('/building/cityhall', (req,res) => {
+    
+        let username : string = (<any>req.user).username;
+    
+        let village = World.getVillage(<any>req.query.villageID);
+
+        let pageData = village.getPageData();
+
+        pageData["username"] = username;
+    
+        res.render("pages/buildings/cityhall", pageData)
+    
+    })
     
     app.get('/', (req, res) => {
         let data : any = {};
