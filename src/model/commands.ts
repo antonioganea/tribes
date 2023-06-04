@@ -1,37 +1,61 @@
 // Types of commands
 
+import { MilitaryCollection } from "./militaryunit";
+import { BuildingType, VillageHandle } from "./objectwrappers";
+import { ResourceCollection } from "./resources";
+
 // one time:
 // update building
 // attack
 // trade
 
-enum CommandType{
-    buildLumberjack,
-    buildMine,
-    buildWall,
+export enum CommandType{
+    upgradeBuilding,
     trainTroops,
-    attackVillage
+    attackVillage,
+    tradeItems
 }
   
-namespace Command{
-    export function Add(time : number, commandType : CommandType, optionalParameters : any) : void {
+export namespace Commands{
+    export function QueueUpgrade(time : number, village : VillageHandle, buildingType : BuildingType) : void {
         // logica
     }
 
+    export function QueueTrainTroops( time : number, village : VillageHandle, troops : MilitaryCollection ) : void {
+        
+    }
+
+    export function QueueAttack( time : number, village : VillageHandle, target : VillageHandle, troops : MilitaryCollection ) : void {
+
+    }
+
+    export function QueueTrade( time : number, village : VillageHandle, target : VillageHandle, seller : ResourceCollection, buyer : ResourceCollection ) : void {
+
+    }
+
+    // TODO : implement
     export function GetCommandsForVillage( villageID: number ) {
 
     }
+
+    // TODO : implement
+    export function ExecutionTick(){
+
+    }
+
+    function ExecuteUpgrade( village : VillageHandle, buildingType : BuildingType) : void {
+        village.buildings.upgradeLevel(buildingType);
+    }
+
+    function ExecuteTrainTroops( village : VillageHandle, troops: MilitaryCollection) : void {
+
+    }
+
+    function ExecuteAttack( village : VillageHandle, target : VillageHandle, troops : MilitaryCollection) : void {
+
+    }
+    
+    function ExecuteTrade( village : VillageHandle, target : VillageHandle, seller : ResourceCollection, buyer : ResourceCollection ) : void {
+
+    }
 }
-/*
-app.get('/buildLumberjack', (req,res) => {
-    let villageID = parseInt(<any>req.query.villageID)
-    let village = World.getVillage(villageID)
-
-    let time = 1000; //in seconds
-    Command.Add(time, CommandType.buildLumberjack, {})
-
-    let village = World.getVillage(villageID)
-
-    res.send(`Building lumberjack in ${village.name}! Command will be ready in ${time} seconds.`)
-})
-*/

@@ -180,13 +180,22 @@ export class BuildingsHandle{
     }
 
     // TODO : implement
-    public setLevel( buildingType : BuildingType ) : void {
-
+    public setLevel( buildingType : BuildingType, level : number ) : boolean {
+        return true;
     }
 
     // TODO : implement
     public getLevel( buildingType : BuildingType ) : number {
         return 0;
+    }
+
+    // TODO : implement
+    public getMaxLevel( buildingType : BuildingType ) : number {
+        return 0;
+    }
+
+    public upgradeLevel ( buildingType : BuildingType ) : boolean {
+        return false;
     }
 }
 

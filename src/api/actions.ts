@@ -1,7 +1,8 @@
 import express, { Express } from "express";
 import { findUser } from "../model/database";
-import { VillageHandle, World } from "../model/objectwrappers";
+import { BuildingType, VillageHandle, World } from "../model/objectwrappers";
 import { Globals } from "../model/queries";
+import { Commands, CommandType } from "../model/commands";
 
 export function setAppActionsMiddleware(app : any){
 
@@ -50,6 +51,27 @@ export function setAppActionsMiddleware(app : any){
         res.render("pages/buildings/cityhall", pageData)
     
     })
+
+    // todo : this is poorly written as an example and needs to be heavily guarded, cleaned, etc
+    app.get('/building/upgrade/', (req,res) => {
+        let villageID = parseInt(<any>req.query.villageID);
+        let village = World.getVillage(villageID);
+
+        if (village == null){ res.send("Village not found"); return }
+
+
+        let buildingType = <any>req.query.type;
+
+        //inverse lookup : for this : Building.GetType(string) => BuildingType
+
+        let btype : BuildingType = BuildingType.CityHall;
+    
+        let time = 1000; //in seconds
+        Commands.QueueUpgrade(time, village, btype);
+    
+        res.send(`Building lumberjack in ${village.name}! Command will be ready in ${time} seconds.`)
+    })
+    
     
     app.get('/', (req, res) => {
         let data : any = {};
