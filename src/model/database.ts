@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { Commands } from './commands';
 
 /*
 Todo : Please consider the following
@@ -68,6 +69,8 @@ function initDatabase(){
   initializeResourcesStmt.run();
   initializeBuildingsStmt.run();
   initializeMilitaryStmt.run();
+
+  Commands.databaseInit(db);
 
   console.log("Database initialized!");
 }
