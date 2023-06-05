@@ -10,23 +10,25 @@ export namespace Globals{
         generateBuildingLevelQueries();
     }
 
-    let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY) VALUES (?,?,?,?);`);
+    let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY, militaryID) VALUES (?,?,?,?,?);`);
     let createEmptyBuildingsStmt = db.prepare(`INSERT INTO "buildings" (villageID) VALUES (?);`);
-    let createEmptyMilitaryStmt = db.prepare(`INSERT INTO "military" (villageID) VALUES (?);`);
+    let createEmptyMilitaryStmt = db.prepare(`INSERT INTO "military" (Axeman) VALUES (0);`); // TODO : this just needs to insert empty record but uses Axeman (hardcoded)
     let createEmptyResourcesStmt = db.prepare(`INSERT INTO "resources" (villageID, checkpointTime) VALUES (?,?);`);
 
     export function createVillage(userID : number, name : string, x : number, y : number) : VillageHandle {
-        let info = createVillageStmt.run(userID, name, x, y);
+        let militaryID = createEmptyMilitaryStmt.run().lastInsertRowid;
+        
+        let info = createVillageStmt.run(userID, name, x, y, militaryID);
         console.log(info)
         createEmptyBuildingsStmt.run(info.lastInsertRowid);
-        createEmptyMilitaryStmt.run(info.lastInsertRowid);
+        
         createEmptyResourcesStmt.run(info.lastInsertRowid, Math.floor(new Date().getTime() / 1000));
         console.log("Village created!");
 
         return new VillageHandle(info.lastInsertRowid);
     }
 
-    let getVillageMilitaryStmt = db.prepare(`SELECT * FROM "military" WHERE villageID=? LIMIT 1;`);
+    let getVillageMilitaryStmt = db.prepare(`SELECT MILITARY.* FROM MILITARY INNER JOIN villages ON villages.militaryID = military.militaryID WHERE villages.villageID=? LIMIT 1;`);
     export function getVillageMilitary( villageID : number ) : any {
         return getVillageMilitaryStmt.get(villageID);
     }

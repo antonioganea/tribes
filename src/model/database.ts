@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Commands } from './commands';
+import { MilitaryUnitType } from './militaryunit';
 
 /*
 Todo : Please consider the following
@@ -42,17 +43,36 @@ let initializeBuildingsStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "buildings"
 	FOREIGN KEY(villageID) REFERENCES villages(villageID)
 );`)
 
-let initializeMilitaryStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "military" (
-	"villageID"	INTEGER NOT NULL UNIQUE PRIMARY KEY,
+function generateMilitaryCollectionColumns() : string{
+
+	let output = "";
+
+	const values = Object.values(MilitaryUnitType);
+	values.forEach((value, index) => {
+		output += `"` + value + `"	INTEGER NOT NULL DEFAULT '0',`
+	});
+
+	output = output.substring(0,output.length-1);
+
+	//console.log(output);
+
+	return output;
+}
+
+let initializeMilitaryCollectionStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "military" (
+	"militaryID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,`
+	+ generateMilitaryCollectionColumns()
+	/*
 	"Swordsman"	INTEGER NOT NULL DEFAULT '0',
 	"Axeman"	INTEGER NOT NULL DEFAULT '0',
 	"Spearman"	INTEGER NOT NULL DEFAULT '0',
 	"Archer"	INTEGER NOT NULL DEFAULT '0',
 	"Chivalry"	INTEGER NOT NULL DEFAULT '0',
 	"AdvChivalry"	INTEGER NOT NULL DEFAULT '0',
-	"Noble"	INTEGER NOT NULL DEFAULT '0',
-	FOREIGN KEY(villageID) REFERENCES villages(villageID)
-);`)
+	"Noble"	INTEGER NOT NULL DEFAULT '0'
+	*/
+	+ `);`
+)
 
 let initializeVillagesStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "villages" (
 	"villageID"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -60,15 +80,17 @@ let initializeVillagesStmt = db.prepare(`CREATE TABLE IF NOT EXISTS "villages" (
 	"name"	TEXT NOT NULL UNIQUE,
 	"positionX"	INTEGER NOT NULL,
 	"positionY"	INTEGER NOT NULL,
-	FOREIGN KEY(userID) REFERENCES users(userID)
+	"militaryID" INTEGER NOT NULL UNIQUE,
+	FOREIGN KEY(userID) REFERENCES users(userID),
+	FOREIGN KEY(militaryID) REFERENCES military(militaryID)
 );`)
 
 function initDatabase(){
   initializeUsersStmt.run();
+  initializeMilitaryCollectionStmt.run();
   initializeVillagesStmt.run();
   initializeResourcesStmt.run();
   initializeBuildingsStmt.run();
-  initializeMilitaryStmt.run();
 
   Commands.databaseInit(db);
 

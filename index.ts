@@ -38,6 +38,7 @@ app.use(express.static('public'))
 setAppPassportMiddleware(app);
 setAppActionsMiddleware(app);
 
+//Globals.createVillage(1, "Valea Regilor", 2, 3)
 
 //World.getUserByName("antonio").villages.forEach((x) => console.log(x.name))
 

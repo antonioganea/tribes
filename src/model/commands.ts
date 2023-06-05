@@ -27,20 +27,13 @@ export namespace Commands{
             FOREIGN KEY(villageID) REFERENCES villages(villageID)
         );`)
 
-        // TODO : Might wanna do just a database entry for MilitaryCollections for more general usage
-        // instead of 'military' and 'trainTroopsCommands' ---- ARCH DESIGN
         let initializeTrainTroopsCommand = db.prepare(`CREATE TABLE IF NOT EXISTS "trainTroopsCommands" (
             "commandID"	INTEGER NOT NULL UNIQUE PRIMARY KEY,
             "time" INTEGER NOT NULL DEFAULT '0',
             "villageID"	INTEGER NOT NULL DEFAULT '0',
-            "Swordsman"	INTEGER NOT NULL DEFAULT '0',
-            "Axeman"	INTEGER NOT NULL DEFAULT '0',
-            "Spearman"	INTEGER NOT NULL DEFAULT '0',
-            "Archer"	INTEGER NOT NULL DEFAULT '0',
-            "Chivalry"	INTEGER NOT NULL DEFAULT '0',
-            "AdvChivalry"	INTEGER NOT NULL DEFAULT '0',
-            "Noble"	INTEGER NOT NULL DEFAULT '0',
-            FOREIGN KEY(villageID) REFERENCES villages(villageID)
+            "militaryID" INTEGER NOT NULL UNIQUE,
+            FOREIGN KEY(villageID) REFERENCES villages(villageID),
+            FOREIGN KEY(militaryID) REFERENCES military(militaryID)
         );`)
 
         let initializeAttackCommand = db.prepare(`CREATE TABLE IF NOT EXISTS "attackCommands" (
@@ -48,15 +41,10 @@ export namespace Commands{
             "time" INTEGER NOT NULL DEFAULT '0',
             "villageID"	INTEGER NOT NULL DEFAULT '0',
             "targetID" INTEGER NOT NULL DEFAULT '0',
-            "Swordsman"	INTEGER NOT NULL DEFAULT '0',
-            "Axeman"	INTEGER NOT NULL DEFAULT '0',
-            "Spearman"	INTEGER NOT NULL DEFAULT '0',
-            "Archer"	INTEGER NOT NULL DEFAULT '0',
-            "Chivalry"	INTEGER NOT NULL DEFAULT '0',
-            "AdvChivalry"	INTEGER NOT NULL DEFAULT '0',
-            "Noble"	INTEGER NOT NULL DEFAULT '0',
+            "militaryID" INTEGER NOT NULL UNIQUE,
             FOREIGN KEY(villageID) REFERENCES villages(villageID),
-            FOREIGN KEY(targetID) REFERENCES villages(villageID)
+            FOREIGN KEY(targetID) REFERENCES villages(villageID),
+            FOREIGN KEY(militaryID) REFERENCES military(militaryID)
         );`)
 
         initializeUpgradeCommand.run();
