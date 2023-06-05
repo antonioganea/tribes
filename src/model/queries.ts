@@ -190,7 +190,8 @@ export namespace Globals{
     }
     
     export function setVillageMilitary( villageID : number, militaryCollection : MilitaryCollection ) : any {
-        // ..
+        let village = getVillage(villageID)
+        setMilitary(village.militaryID, militaryCollection)
     }
 }
 
