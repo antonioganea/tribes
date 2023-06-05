@@ -190,7 +190,7 @@ export namespace Globals{
     }
     
     export function setVillageMilitary( villageID : number, militaryCollection : MilitaryCollection ) : any {
-        return getVillageMilitaryStmt.run(villageID);
+        // ..
     }
 }
 
