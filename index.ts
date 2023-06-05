@@ -3,6 +3,7 @@ import { Globals } from './src/model/queries';
 import { setAppPassportMiddleware } from './src/api/login';
 import { setAppActionsMiddleware } from './src/api/actions';
 import { World } from './src/model/objectwrappers';
+import { newMilitaryCollection } from './src/model/militaryunit';
 
 /*
 let user: User = new User("antonio");
@@ -39,6 +40,14 @@ setAppPassportMiddleware(app);
 setAppActionsMiddleware(app);
 
 //Globals.createVillage(1, "Valea Regilor", 2, 3)
+
+/*
+let mc = newMilitaryCollection()
+mc.Archer = 10;
+mc.Chivalry = 251;
+console.log(mc);
+Globals.setMilitary(1, mc);
+*/
 
 //World.getUserByName("antonio").villages.forEach((x) => console.log(x.name))
 

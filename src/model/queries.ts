@@ -1,5 +1,6 @@
 import { BuildingType } from "./building";
 import { db } from "./database";
+import { MilitaryCollection, MilitaryUnitType } from "./militaryunit";
 import { VillageHandle } from "./objectwrappers";
 import { WorldPosition } from "./utils";
 
@@ -8,6 +9,7 @@ export namespace Globals{
 
     export function init(){
         generateBuildingLevelQueries();
+        generateMilitaryQueries();
     }
 
     let createVillageStmt = db.prepare(`INSERT INTO "villages" (userID, name, positionX, positionY, militaryID) VALUES (?,?,?,?,?);`);
@@ -158,6 +160,37 @@ export namespace Globals{
 
     export function getBuildingLevel( villageID : number, building : BuildingType ) : number {
         return getBuildingLevelStmts[building].get(villageID)[building];
+    }
+
+    let setVillageMilitaryStmt;
+
+    function generateMilitaryQueries(){
+        let text = "";
+
+        const values = Object.values(MilitaryUnitType);
+        values.forEach((value, index) => {
+            text += value + " = $" + value + ", ";
+        });
+
+        text = text.substring(0,text.length-2);
+
+        setVillageMilitaryStmt = db.prepare(`UPDATE "military" SET ` + text + ` WHERE militaryID = $militaryID;`)
+    }
+
+    export function setMilitary( militaryID: number, militaryCollection : MilitaryCollection) {
+        let params = {}
+        Object.keys(militaryCollection).forEach((value) => {
+            params[value] = militaryCollection[value];
+        });
+        params["militaryID"] = militaryID;
+
+        console.log(params)
+
+        setVillageMilitaryStmt.run(params)
+    }
+    
+    export function setVillageMilitary( villageID : number, militaryCollection : MilitaryCollection ) : any {
+        return getVillageMilitaryStmt.run(villageID);
     }
 }
 
