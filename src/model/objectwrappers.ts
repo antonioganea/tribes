@@ -3,6 +3,7 @@
  */
 
 import { BuildingType } from "./building";
+import { Commands } from "./commands";
 import { MilitaryUnitType } from "./militaryunit";
 import { Globals } from "./queries";
 import { ResourceCollection, ResourceType } from "./resources";
@@ -137,6 +138,7 @@ export class VillageHandle{
             military : Globals.getVillageMilitary(this.villageID),
             buildings: Globals.getVillageBuildings(this.villageID),
             resources: Globals.getVillageResources(this.villageID),
+            commands: Commands.GetCommandsForVillage(this.villageID),
             owner : this.owner.getDBRow()
             //resources : resources
         };
